@@ -1,16 +1,15 @@
-//apply plugin: "com.github.buggaboo.j2objc.gradle" // TODO activate when we have an actual plugin
 apply plugin: 'java' // for the Jar task
 apply plugin: 'org.xtext.xtend' // because we moved the gradle code over here      
 
 // TODO activate when we have an actual plugin
-/*
-repositories {
+buildscript {
     dependencies {
-        classpath fileTree(dir: '../j2objc-gradle-plugin/libs', include: ['*.jar'])
+        classpath fileTree(dir: '../libs', include: ['*.jar'])
     }
-
 }
-*/
+
+apply plugin: "com.github.buggaboo.j2objc.gradle" // TODO activate when we have an actual plugin
+
 
 // TODO - the plugin should do a sanity check, check rootProject.file('local.properties') and System.getenv('J2OBJC_HOME') ... dist/lib
 /*

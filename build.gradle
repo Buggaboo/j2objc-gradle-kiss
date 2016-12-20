@@ -6,6 +6,9 @@ task wrapper(type: Wrapper) {
 
 apply plugin: 'org.xtext.xtend'
 
+// Disabled, because the top project doesn't have actual code
+project.tasks['jar'].enabled = false
+
 buildscript {
     ext {
         // android stuff
