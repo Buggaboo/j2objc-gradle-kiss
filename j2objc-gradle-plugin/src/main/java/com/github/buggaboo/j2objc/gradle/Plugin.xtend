@@ -1,17 +1,81 @@
 package com.github.buggaboo.j2objc.gradle
 
+import org.gradle.api.Task
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.eclipse.xtend.lib.annotations.Accessors
 
-import org.gradle.api.tasks.TaskExecutionException
-import java.util.Properties
 import java.io.File
 import java.io.FileWriter
 import java.io.BufferedWriter
 import java.io.IOException
+import java.util.List
+import java.util.ArrayList
+import java.util.Collection
+
+/**
+ * Translate all java files and put them somewhere
+ */
+class J2ObjcConfigExtension {
+    List<String> includePatterns = new ArrayList<String>()
+    List<String> excludePatterns = new ArrayList<String>()
+    List<String> mTranslateArgs = new ArrayList<String>()
+    List<String> mCompileArgs = new ArrayList<String>()
+
+    new () {}
+
+    new (Task task) {
+        // TODO enter defaults
+        // task.inputs.property ('', new Object) // TODO determine utility
+    }
+
+    @Accessors
+    boolean runTests
+
+    @Accessors
+    String minVersionIos
+
+    @Accessors
+    boolean createFramework
+
+    def void translateArgs(String... args) {
+        for(a : args) {
+            mCompileArgs.add(a)
+        }
+    }
+
+    def void translateArgs(Collection<String> args) {
+        mTranslateArgs.addAll(args)
+    }
+
+    def void compileArgs(String... args) {
+        for(a : args) {
+            mCompileArgs.add(a)
+        }
+    }
+
+    def void compileArgs(Collection<String> args) {
+        mCompileArgs.addAll(args)
+    }
+
+    def void exclude(String pattern) {
+        excludePatterns.add(pattern)
+    }
+
+    def void excludes(Collection<String> patterns) {
+        excludePatterns.addAll(patterns)
+    }
+
+    def void include(String pattern) {
+        includePatterns.add(pattern)
+    }
+
+    def void includes(Collection<String> patterns) {
+        includePatterns.addAll(patterns)
+    }
+}
 
 
 /**
@@ -93,9 +157,20 @@ class J2ObjcPlugin implements Plugin<Project>
 {
     override apply(Project project) {
         // IosFrameworkSymlinkTask
-        project.extensions.create("SymlinkSettings", SymlinkExtension)
+        project.extensions.create("symlinkConfig", SymlinkExtension)
+        project.extensions.create("j2objcConfig", J2ObjcConfigExtension)
 
         // Usage: just extend this task and do something with it...
         val SymLinkFrameworkTask = project.tasks.create("SymLinkFramework", IosFrameworkSymlinkTask)
     }
 }
+
+/**
+sources:
+- http://www.thinkcode.se/blog/2015/03/22/a-gradle-plugin-written-in-java
+- http://mrhaki.blogspot.nl/2016/03/gradle-goodness-adding-custom-extension.html
+- https://leanpub.com/gradle-goodness-notebook/read
+- https://github.com/hierynomus/license-gradle-plugin/blob/master/src/main/groovy/nl/javadude/gradle/plugins/license/LicenseExtension.groovy
+- https://github.com/hierynomus/license-gradle-plugin
+- http://www.slideshare.net/ysb33r/idiomatic-gradle-plugin-writing
+*/

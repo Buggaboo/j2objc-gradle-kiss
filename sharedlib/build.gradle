@@ -1,15 +1,11 @@
 apply plugin: 'java' // for the Jar task
-apply plugin: 'org.xtext.xtend' // because we moved the gradle code over here      
+apply plugin: 'org.xtext.xtend'
 
-// TODO activate when we have an actual plugin
 buildscript {
     dependencies {
         classpath fileTree(dir: '../libs', include: ['*.jar'])
     }
 }
-
-apply plugin: "com.github.buggaboo.j2objc.gradle" // TODO activate when we have an actual plugin
-
 
 // TODO - the plugin should do a sanity check, check rootProject.file('local.properties') and System.getenv('J2OBJC_HOME') ... dist/lib
 /*
@@ -40,6 +36,38 @@ dependencies {
     j2objcTranslation "org.eclipse.xtext:org.eclipse.xtext.xbase.lib:${project.ext.xtend_lib_ver}:sources"
     j2objcTranslation "org.eclipse.xtend:org.eclipse.xtend.lib:${project.ext.xtend_lib_ver}:sources"
 */
+}
+
+
+apply plugin: "com.github.buggaboo.j2objc.gradle"
+
+j2objcConfig {
+    minVersionIos '8.0'
+
+    // TODO support tests ./src/main/test
+    runTests false
+
+    // TODO support exclude tests
+//    testPattern {
+//        exclude ''
+//        exclude '', '', ''
+//        excludes += []
+//    }
+
+    translateArgs '--prefix'
+    translateArgs '--aprefix', 'com.github.buggaboo.j2objc.gradle.testlib=tl', '--prefix', 'com.github.buggaboo.j2objc.gradle.testlib.moar=tm'
+//    translateArgs '--bprefix' 'com.github.buggaboo.j2objc.gradle.testlib=tl' '--prefix' 'com.github.buggaboo.j2objc.gradle.testlib.moar=tm'
+//    translateArgs ['--cprefix', 'com.github.buggaboo.j2objc.gradle.testlib=tl', '--prefix', 'com.github.buggaboo.j2objc.gradle.testlib.moar=tm']
+
+    //translateArgs ['--dead-code-report', 'dead_code.txt']
+
+    //translateArgs '--batch-translate-max=5'
+
+    // @Deprecated
+    //extraObjcCompilerArgs '-fembed-bitcode' // don't use this
+
+    // TODO
+    //compileArgs '-fembed-bitcode' // same thing as above
 }
 
 

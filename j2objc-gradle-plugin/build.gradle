@@ -24,7 +24,7 @@ dependencies {
     compile "org.eclipse.xtend:org.eclipse.xtend.lib:${project.xtendLibVersion}"
 //    compile fileTree(dir: "${project.J2OBJC_LIBS}", include: [ 'j2objc_annotations.jar' ])
 
-    testCompile 'junit:junit:${project.junitVersion}'
+    testCompile "junit:junit:${project.junitVersion}"
 }
 
 test {
