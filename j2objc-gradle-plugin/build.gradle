@@ -1,0 +1,36 @@
+// Client Usage: apply plugin: "com.github.buggaboo.j2objc.gradle"
+
+apply plugin: 'java' // for the Jar task
+apply plugin: 'org.xtext.xtend'
+
+task makePluginJar(type: Jar, dependsOn: 'build' ) {
+    destinationDir = new File('libs')
+    includeEmptyDirs = false
+    archiveName ='j2objc-gradle-kiss-plugin.jar'
+
+    // NOTE: build the xtend project first!
+    from('build/xtend/main')
+    from('build/classes/main')
+    from('build/resources/main')
+    include('**/*.class', '**/gradle-plugins/*.properties')
+}
+
+project.afterEvaluate {
+    build.finalizedBy makePluginJar
+}
+
+dependencies {
+    compile gradleApi()
+    compile "org.eclipse.xtend:org.eclipse.xtend.lib:${project.xtendLibVersion}"
+//    compile fileTree(dir: "${project.J2OBJC_LIBS}", include: [ 'j2objc_annotations.jar' ])
+
+    testCompile 'junit:junit:${project.junitVersion}'
+}
+
+test {
+    testLogging.showStandardStreams = true 
+}
+
+
+
+

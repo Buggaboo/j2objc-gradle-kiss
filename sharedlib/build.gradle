@@ -1,0 +1,93 @@
+//apply plugin: "com.github.buggaboo.j2objc.gradle" // TODO activate when we have an actual plugin
+apply plugin: 'java' // for the Jar task
+apply plugin: 'org.xtext.xtend' // because we moved the gradle code over here      
+
+// TODO activate when we have an actual plugin
+/*
+repositories {
+    dependencies {
+        classpath fileTree(dir: '../j2objc-gradle-plugin/libs', include: ['*.jar'])
+    }
+
+}
+*/
+
+// TODO - the plugin should do a sanity check, check rootProject.file('local.properties') and System.getenv('J2OBJC_HOME') ... dist/lib
+/*
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+def J2OBJC_HOME = properties.getProperty('j2objc.home') // local.properties: j2objc.home=/Users/user/Documents/git-repositories/j2objc/dist
+
+or
+
+def J2OBJC_HOME = "${System.getenv('J2OBJC_HOME')}" // .bashrc: export J2OBJC_HOME="${HOME}/Documents/git-repositories/j2objc/dist"
+
+then
+
+def J2OBJC_LIBS = "${J2OBJC_HOME}/lib"
+*/
+
+dependencies {
+    // TODO inject the j2objc project location, if found
+//    compile     fileTree(dir: project.J2OBJC_LIBS, include: [ 'j2objc_annotations.jar' ])
+    compile "org.eclipse.xtend:org.eclipse.xtend.lib:${project.xtendLibVersion}"
+
+    testCompile "junit:junit:${project.junitVersion}"
+
+    // TODO translate dependencies
+/*
+    j2objcTranslation "org.eclipse.xtend:org.eclipse.xtend.lib.macro:${project.ext.xtend_lib_ver}:sources"
+    j2objcTranslation "org.eclipse.xtext:org.eclipse.xtext.xbase.lib:${project.ext.xtend_lib_ver}:sources"
+    j2objcTranslation "org.eclipse.xtend:org.eclipse.xtend.lib:${project.ext.xtend_lib_ver}:sources"
+*/
+}
+
+
+/*
+j2objcConfig {
+
+    minVersionIos '8.0'
+
+    // This should eventually become the default but doesn't have any use within this example
+    autoConfigureDeps true
+
+    testPattern {
+	// disabled because it ruins the other tests, but ran alone it works perfectly on android / jvm / iOS / OSX
+        exclude 'foobar/com/mobile/shared/rest/CertificateSecurityTest.java'
+        exclude 'foobar/com/mobile/shared/rest/SecurityTest.java'
+    }
+
+    testMinExpectedTests 0 // TODO enable all tests, when we have actual working tests
+
+    translateArgs '--prefix', 'com.foobar.mobile.shared.e2e=fooME2E'
+    translateArgs '--prefix', 'com.foobar.mobile.shared.pinning=fooMPinning'
+    translateArgs '--prefix', 'com.foobar.mobile.shared.rest.calls=fooMRCalls'
+    translateArgs '--prefix', 'com.foobar.mobile.shared.rest.models=fooMRModels'
+    translateArgs '--prefix', 'com.foobar.mobile.shared.ice=fooICE'
+    translateArgs '--swift-friendly', '--doc-comments', '--no-segmented-headers'
+//    translateArgs '--dead-code-report', 'dead_code.txt'
+
+    translateArgs '--batch-translate-max=5'
+
+    extraObjcCompilerArgs '-fembed-bitcode'
+
+    // sources:
+    // https://discussions.apple.com/thread/3754858?tstart=0
+    // j2objc-gradle/src/main/groovy/com/github/j2objccontrib/j2objcgradle/NativeCompilation.groovy
+
+    // Xcode
+    //xcodeProjectDir '../ios'
+    //xcodeTargetsIos 'IOS-APP', 'IOS-APPTests'
+    //xcodeTargetsOsx 'OSX-APP', 'OSX-APPTests'
+    // TODO: xcodeTargetsWatchos 'WATCH-APP', 'WATCH-APPTests'
+    xcodeProjectDir '../swift'
+    xcodeTargetsIos 'fooModules'
+
+    // For testing on the iPhone 5 simulator
+    supportedArchs += ['ios_i386', 'ios_armv7s']
+
+    finalConfigure()
+}
+*/
+

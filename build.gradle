@@ -1,0 +1,41 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '2.14.1' // follows the android gradle plugin
+}
+
+apply plugin: 'org.xtext.xtend'
+
+buildscript {
+    ext {
+        // android stuff
+        minSdkVersion = 15
+        sdkVersion = 25
+        buildToolsVersion = '25.0.1'
+        supportAnnotationsVersion = '23.1.1'
+
+        // xtend stuff
+        xtextGradleVersion = '1.0.13'
+        xtendLibVersion = '2.10.0'
+        junitVersion = '4.12'
+    }
+
+    repositories {
+        jcenter()
+        mavenCentral()
+        mavenLocal()
+    }
+
+    dependencies {
+        // xtend / xtext plugin
+	classpath "org.xtext:xtext-gradle-plugin:${project.xtextGradleVersion}"
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        mavenCentral()
+        mavenLocal()
+    }
+}
