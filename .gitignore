@@ -37,6 +37,7 @@ captures/
 
 # Intellij
 *.iml
+*.idea
 .idea/workspace.xml
 
 # Keystore files
@@ -47,3 +48,6 @@ captures/
 
 # Mac OS(X)
 .DS_Store
+
+# iOS / MacOS Artefacts
+*.framework
